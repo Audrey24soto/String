@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>Order.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">java (Jun 4, 2021 10:32:43 AM)</a> &gt; <a href="../../index.html" class="el_group">UnicornIMS-Starter</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.qa.ims.persistence.domain</a> &gt; <span class="el_source">Order.java</span></div><h1>Order.java</h1><pre class="source lang-java linenums">package com.qa.ims.persistence.domain;
+import java.util.*;
+
+public class Order {
+
+	private int order_id;
+	private int customer_id;
+	private String order_placed;
+	private int product_id;
+	private int quantity_ordered;
+	private float price;
+	
+<span class="nc" id="L13">	public Order(int order_id, int customer_id, String order_placed, int quantity_ordered, int product_id, float price) {</span>
+<span class="nc" id="L14">		this.setOrderId(order_id); //order and sub order</span>
+<span class="nc" id="L15">		this.setDate(order_placed); //order</span>
+<span class="nc" id="L16">		this.setCustomerID(customer_id); //order</span>
+<span class="nc" id="L17">		this.setPrice(price); //view all</span>
+<span class="nc" id="L18">		this.setQuantity(quantity_ordered); //sub order</span>
+<span class="nc" id="L19">		this.setID(product_id); //sub order</span>
+<span class="nc" id="L20">	}</span>
+
+	public void setOrderId(int Id) {
+<span class="nc" id="L23">		this.order_id = Id;</span>
+<span class="nc" id="L24">	}</span>
+	public int getOrderID() {
+<span class="nc" id="L26">		return order_id;</span>
+	}
+	public void setDate(String order_placed2) {
+<span class="nc" id="L29">		this.order_placed = order_placed2;</span>
+<span class="nc" id="L30">	}</span>
+	public void setQuantity(int product_quantity2) {
+<span class="nc" id="L32">		this.quantity_ordered = product_quantity2;</span>
+<span class="nc" id="L33">	}</span>
+	public String getDate() {
+<span class="nc" id="L35">		return order_placed;</span>
+	}
+	public int getQuantity() {
+<span class="nc" id="L38">		return quantity_ordered;</span>
+	}
+	public void setID(int Id) //product id for sub order table
+	{ 
+<span class="nc" id="L42">		this.product_id = Id;</span>
+<span class="nc" id="L43">	}</span>
+	public int getID() //product id for sub order table
+	{ 
+<span class="nc" id="L46">		return product_id;</span>
+	}
+	public int getCustomerID()
+	{
+<span class="nc" id="L50">		return customer_id;</span>
+	}
+	public void setCustomerID(int customer_ID)
+	{
+<span class="nc" id="L54">		this.customer_id = customer_ID;</span>
+<span class="nc" id="L55">	}</span>
+	public void setPrice(float price)
+	{
+<span class="nc" id="L58">		this.price = price;</span>
+<span class="nc" id="L59">	}</span>
+	public float getPrice()
+	{
+<span class="nc" id="L62">		return price;</span>
+	}
+	
+	@Override
+	public String toString() {
+<span class="nc" id="L67">		return &quot;Order ID: &quot; + order_id + &quot; Customer ID: &quot; + customer_id + &quot; Date Place: &quot; + order_placed + &quot; Quantity Ordered: &quot; + quantity_ordered + &quot; Product Ordered: &quot; + product_id + &quot; Price: &quot; + price;</span>
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+<span class="nc bnc" id="L72" title="All 2 branches missed.">		if (this == obj)</span>
+<span class="nc" id="L73">			return true;</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">		if (obj == null)</span>
+<span class="nc" id="L75">			return false;</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">		if (getClass() != obj.getClass())</span>
+<span class="nc" id="L77">			return false;</span>
+<span class="nc" id="L78">		Order other = (Order) obj;</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">		if (getDate() == null) {</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">			if (other.getDate() != null)</span>
+<span class="nc" id="L81">				return false;</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">		} else if (!getDate().equals(other.getDate()))</span>
+<span class="nc" id="L83">			return false;</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">		if (product_id == 0) {</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">			if (product_id != 0)</span>
+<span class="nc" id="L86">				return false;</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">		} else if (product_id != (other.product_id))</span>
+<span class="nc" id="L88">			return false;</span>
+<span class="nc" id="L89">		return true;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>java (Jun 4, 2021 10:32:43 AM)</div></body></html>

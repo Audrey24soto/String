@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>Item.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">java (Jun 4, 2021 10:32:43 AM)</a> &gt; <a href="../../index.html" class="el_group">UnicornIMS-Starter</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.qa.ims.persistence.domain</a> &gt; <span class="el_source">Item.java</span></div><h1>Item.java</h1><pre class="source lang-java linenums">package com.qa.ims.persistence.domain;
+
+public class Item {
+
+	private int Product_id;
+	private int Product_quantity;
+	private String Product_Name;
+	private String Product_desc;
+	private Float Price;
+	
+<span class="nc" id="L11">	public Item(int Product_id, String Product_Name, String Product_desc, int Product_quantity, Float Price) {</span>
+<span class="nc" id="L12">		this.setId(Product_id);</span>
+<span class="nc" id="L13">		this.setQuantity(Product_quantity);</span>
+<span class="nc" id="L14">		this.setName(Product_Name);</span>
+<span class="nc" id="L15">		this.setDesc(Product_desc);</span>
+<span class="nc" id="L16">		this.setPrice(Price);</span>
+<span class="nc" id="L17">	}</span>
+	
+	public void setPrice(Float price2) {
+<span class="nc" id="L20">		this.Price = price2;</span>
+<span class="nc" id="L21">	}</span>
+	public void setDesc(String product_desc2) {
+<span class="nc" id="L23">		this.Product_desc = product_desc2;</span>
+<span class="nc" id="L24">	}</span>
+	public void setName(String product_Name2) {
+<span class="nc" id="L26">		this.Product_Name = product_Name2;</span>
+<span class="nc" id="L27">	}</span>
+	public void setQuantity(int product_quantity2) {
+<span class="nc" id="L29">		this.Product_quantity = product_quantity2;</span>
+<span class="nc" id="L30">	}</span>
+	public float getPrice() {
+<span class="nc" id="L32">		return Price;</span>
+	}
+	public String getProduct_Name() {
+<span class="nc" id="L35">		return Product_Name;</span>
+	}
+	public String getProduct_Desc() {
+<span class="nc" id="L38">		return Product_desc;</span>
+	}
+	public int getQuantity() {
+<span class="nc" id="L41">		return Product_quantity;</span>
+	}
+	public void setId(int Id) {
+<span class="nc" id="L44">		this.Product_id = Id;</span>
+<span class="nc" id="L45">	}</span>
+	public int getID() {
+<span class="nc" id="L47">		return Product_id;</span>
+	}
+	@Override
+	public String toString() {
+<span class="nc" id="L51">		return &quot;Product ID:&quot; + Product_id + &quot; Product Name: &quot; + Product_Name +  &quot; Product Description: &quot; + Product_desc + &quot; Product Quantity: &quot; + Product_quantity + &quot; Price: &quot; + Price;</span>
+	}
+	@Override
+	public boolean equals(Object obj) {
+<span class="nc bnc" id="L55" title="All 2 branches missed.">		if (this == obj)</span>
+<span class="nc" id="L56">			return true;</span>
+<span class="nc bnc" id="L57" title="All 2 branches missed.">		if (obj == null)</span>
+<span class="nc" id="L58">			return false;</span>
+<span class="nc bnc" id="L59" title="All 2 branches missed.">		if (getClass() != obj.getClass())</span>
+<span class="nc" id="L60">			return false;</span>
+<span class="nc" id="L61">		Item other = (Item) obj;</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">		if (getProduct_Desc() == null) {</span>
+<span class="nc bnc" id="L63" title="All 2 branches missed.">			if (other.getProduct_Desc() != null)</span>
+<span class="nc" id="L64">				return false;</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">		} else if (!getProduct_Desc().equals(other.getProduct_Desc()))</span>
+<span class="nc" id="L66">			return false;</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">		if (Product_id == 0) {</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">			if (Product_id != 0)</span>
+<span class="nc" id="L69">				return false;</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">		} else if (Product_id != (other.Product_id))</span>
+<span class="nc" id="L71">			return false;</span>
+<span class="nc" id="L72">		return true;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>java (Jun 4, 2021 10:32:43 AM)</div></body></html>

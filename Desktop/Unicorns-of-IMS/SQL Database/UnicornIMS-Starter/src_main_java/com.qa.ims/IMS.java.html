@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>IMS.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">java (Jun 4, 2021 10:32:43 AM)</a> &gt; <a href="../../index.html" class="el_group">UnicornIMS-Starter</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.qa.ims</a> &gt; <span class="el_source">IMS.java</span></div><h1>IMS.java</h1><pre class="source lang-java linenums">package com.qa.ims;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+
+import com.qa.ims.controller.Action;
+import com.qa.ims.controller.CrudController;
+import com.qa.ims.controller.CustomerController;
+import com.qa.ims.controller.ItemController;
+import com.qa.ims.controller.OrderController;
+import com.qa.ims.persistence.dao.CustomerDAO;
+import com.qa.ims.persistence.dao.ItemDAO;
+import com.qa.ims.persistence.dao.OrderDAO;
+import com.qa.ims.persistence.domain.Domain;
+import com.qa.ims.utils.DBUtils;
+import com.qa.ims.utils.Utils;
+
+public class IMS {
+
+<span class="nc" id="L21">	public static final Logger LOGGER = LogManager.getLogger();</span>
+
+	private final CustomerController customers;
+	private final ItemController item;
+	private final Utils utils;
+	private final OrderController order;
+
+<span class="nc" id="L28">	public IMS() {</span>
+<span class="nc" id="L29">		this.utils = new Utils();</span>
+<span class="nc" id="L30">		final CustomerDAO custDAO = new CustomerDAO();</span>
+<span class="nc" id="L31">		this.customers = new CustomerController(custDAO, utils);</span>
+<span class="nc" id="L32">		final ItemDAO itemDAO = new ItemDAO();</span>
+<span class="nc" id="L33">		this.item = new ItemController(itemDAO, utils);</span>
+<span class="nc" id="L34">		final OrderDAO orderDAO = new OrderDAO();</span>
+<span class="nc" id="L35">		this.order = new OrderController(orderDAO, utils);</span>
+<span class="nc" id="L36">	}</span>
+
+	public void imsSystem() {
+<span class="nc" id="L39">		LOGGER.info(&quot;Welcome to the Inventory Management System!&quot;);</span>
+<span class="nc" id="L40">		DBUtils.connect();</span>
+
+<span class="nc" id="L42">		Domain domain = null;</span>
+		do {
+<span class="nc" id="L44">			LOGGER.info(&quot;Which entity would you like to use?&quot;);</span>
+<span class="nc" id="L45">			Domain.printDomains();</span>
+			
+
+<span class="nc" id="L48">			domain = Domain.getDomain(utils);</span>
+
+<span class="nc" id="L50">			domainAction(domain);</span>
+
+<span class="nc bnc" id="L52" title="All 2 branches missed.">		} while (domain != Domain.STOP);</span>
+<span class="nc" id="L53">	}</span>
+
+	private void domainAction(Domain domain) {
+<span class="nc" id="L56">		boolean changeDomain = false;</span>
+		do {
+
+<span class="nc" id="L59">			CrudController&lt;?&gt; active = null;</span>
+<span class="nc bnc" id="L60" title="All 5 branches missed.">			switch (domain) {</span>
+			case CUSTOMER:
+<span class="nc" id="L62">				active = this.customers;</span>
+<span class="nc" id="L63">				break;</span>
+			case ITEM:
+<span class="nc" id="L65">				active = this.item;</span>
+<span class="nc" id="L66">				break;</span>
+			case ORDER:
+<span class="nc" id="L68">				active = this.order;</span>
+<span class="nc" id="L69">				break;</span>
+			case STOP:
+<span class="nc" id="L71">				return;</span>
+			default:
+				break;
+			}
+
+<span class="nc" id="L76">			LOGGER.info(() -&gt;&quot;What would you like to do with &quot; + domain.name().toLowerCase() + &quot;:&quot;);</span>
+
+<span class="nc" id="L78">			Action.printActions();</span>
+<span class="nc" id="L79">			Action action = Action.getAction(utils);</span>
+
+<span class="nc bnc" id="L81" title="All 2 branches missed.">			if (action == Action.RETURN) {</span>
+<span class="nc" id="L82">				changeDomain = true;</span>
+<span class="nc" id="L83">			} else {</span>
+<span class="nc" id="L84">				doAction(active, action);</span>
+			}
+<span class="nc bnc" id="L86" title="All 2 branches missed.">		} while (!changeDomain);</span>
+<span class="nc" id="L87">	}</span>
+
+	public void doAction(CrudController&lt;?&gt; crudController, Action action) {
+<span class="nc bnc" id="L90" title="All 9 branches missed.">		switch (action) {</span>
+		case CREATE:
+<span class="nc" id="L92">			crudController.create();</span>
+<span class="nc" id="L93">			break;</span>
+		case VIEW:
+<span class="nc" id="L95">			crudController.viewAll();</span>
+<span class="nc" id="L96">			break;</span>
+		case UPDATE:
+<span class="nc" id="L98">			crudController.update();</span>
+<span class="nc" id="L99">			break;</span>
+		case DELETE:
+<span class="nc" id="L101">			crudController.delete();</span>
+<span class="nc" id="L102">			break;</span>
+		case RETURN:
+<span class="nc" id="L104">			break;</span>
+		case ADDITEM:
+<span class="nc" id="L106">			crudController.create_item();</span>
+<span class="nc" id="L107">			break;</span>
+		case DELETEITEM:
+<span class="nc" id="L109">			crudController.delete_item();</span>
+<span class="nc" id="L110">			break;</span>
+		case DELETEORDERP1:
+<span class="nc" id="L112">			crudController.delete_order();</span>
+<span class="nc" id="L113">			break;</span>
+		default:
+			break;
+		}
+<span class="nc" id="L117">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>java (Jun 4, 2021 10:32:43 AM)</div></body></html>

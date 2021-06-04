@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>OrderController.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">java (Jun 4, 2021 10:32:43 AM)</a> &gt; <a href="../../index.html" class="el_group">UnicornIMS-Starter</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.qa.ims.controller</a> &gt; <span class="el_source">OrderController.java</span></div><h1>OrderController.java</h1><pre class="source lang-java linenums">package com.qa.ims.controller;
+
+import java.util.List;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+//import com.mysql.cj.x.protobuf.MysqlxCrud.Order;
+import com.qa.ims.persistence.dao.OrderDAO;
+import com.qa.ims.persistence.domain.Order;
+import com.qa.ims.utils.Utils;
+
+/**
+ * Takes in customer details for CRUD functionality
+ *
+ */
+public class OrderController implements CrudController&lt;Order&gt; {
+	
+
+<span class="nc" id="L20">	public static final Logger LOGGER = LogManager.getLogger();</span>
+	private OrderDAO orderDAO;
+	private Utils utils;
+	/*
+	public CustomerController(CustomerDAO customerDAO, Utils utils) {
+		super();
+		this.customerDAO = customerDAO;
+		this.utils = utils;
+	}
+	*/
+	
+	public OrderController(OrderDAO orderDAO, Utils utils) {
+<span class="nc" id="L32">		super();</span>
+<span class="nc" id="L33">		this.orderDAO = orderDAO;</span>
+<span class="nc" id="L34">		this.utils = utils;</span>
+<span class="nc" id="L35">	}</span>
+	private String Name;
+	
+	@Override
+	public List&lt;Order&gt; viewAll() {
+<span class="nc" id="L40">		List&lt;Order&gt; orders = orderDAO.viewAll();</span>
+<span class="nc bnc" id="L41" title="All 2 branches missed.">		for (int i = 0; i &lt; orders.size(); i ++) {</span>
+<span class="nc" id="L42">			LOGGER.info(orders.get(i));</span>
+	}	
+<span class="nc" id="L44">		return orders;</span>
+	
+	}
+
+	/**
+	 * Creates a Items by taking in user input
+	 */
+	/*
+	public Item getProduct_Id() {
+		
+	}
+*/
+	@Override
+	public Order create() {
+<span class="nc" id="L58">			LOGGER.info(&quot;Enter the Customer ID:&quot;);</span>
+<span class="nc" id="L59">			int cust_ID = utils.getInt();</span>
+<span class="nc" id="L60">			LOGGER.info(&quot;Enter the Date the Order was placed (YYYY-MM-DD):&quot;);</span>
+<span class="nc" id="L61">			String date = utils.getString();</span>
+<span class="nc" id="L62">			Order order = orderDAO.create(new Order(0, cust_ID, date, 0, 0, 0));</span>
+<span class="nc" id="L63">			create_item();</span>
+<span class="nc" id="L64">			LOGGER.info(&quot;Order Created&quot;);</span>
+<span class="nc" id="L65">			return order;</span>
+		
+			
+			
+		
+		//LOGGER.info(&quot;The Price entered is: &quot; + Price + &quot;. The Quantity entered is: &quot; + quantity + &quot;. The Description entered is: &quot; + desc + &quot;. The Name entered is: &quot; + name + &quot;.&quot;);
+		
+	}
+/**
+	
+	
+	 * Updates an existing customer by taking in user input
+	 * 
+	 * 
+	 * 
+	 */
+	
+	/*
+	@Override
+	public Order update() {
+		LOGGER.info(&quot;Enter the new price for the Product:&quot;);
+		float Price = Float.parseFloat(utils.getString());
+		LOGGER.info(&quot;Enter the new Quantity Available for the Product:&quot;);
+		int quantity = utils.getInt();
+		LOGGER.info(&quot;Enter the new Description for the Product:&quot;);
+		String desc = utils.getString();
+		LOGGER.info(&quot;Enter the new Name of the Product:&quot;);
+		String name = utils.getString();
+		LOGGER.info(&quot;Enter the ID of the Product being updated:&quot;);
+		int id = utils.getInt();
+		Order order = orderDAO.update(new order(id, name, desc, quantity, Price));
+		LOGGER.info(&quot;Product Updated&quot;); 
+		return null;
+	}
+	*/
+	/**
+	 * Deletes an existing Items by the id of the Item
+	 * 
+	 * @return
+	 */
+	@Override
+	public int delete() {
+<span class="nc" id="L107">		int id = delete_order();</span>
+<span class="nc" id="L108">		return orderDAO.delete(id);</span>
+	}
+
+	@Override
+	public Order getcustomer_Id() {
+		// TODO Auto-generated method stub
+<span class="nc" id="L114">		return null;</span>
+	}
+
+	@Override
+	public Order update() {
+		// TODO Auto-generated method stub
+<span class="nc" id="L120">		return null;</span>
+	}
+
+	@Override
+	public Order create_item() {
+		// TODO Auto-generated method stub
+		//Ask for order_id, product_id, quantity_ordered
+<span class="nc" id="L127">		LOGGER.info(&quot;Enter the Order Number&quot;);</span>
+<span class="nc" id="L128">		int order_num = utils.getInt();</span>
+<span class="nc" id="L129">		LOGGER.info(&quot;Enter the item number being ordered&quot;);</span>
+<span class="nc" id="L130">		int product_ID = utils.getInt();</span>
+<span class="nc" id="L131">		LOGGER.info(&quot;Enter how many are being ordered&quot;);</span>
+<span class="nc" id="L132">		int orderquantaty = utils.getInt();</span>
+<span class="nc" id="L133">		Order order = orderDAO.addItem(new Order(order_num, 0, null, orderquantaty, product_ID, 0));</span>
+<span class="nc" id="L134">		LOGGER.info(&quot;Item Added&quot;);</span>
+<span class="nc" id="L135">		return order;</span>
+	}
+
+	@Override
+	public int delete_item() {
+<span class="nc" id="L140">		LOGGER.info(&quot;Please enter the id of the item you would like to delete&quot;);</span>
+<span class="nc" id="L141">		int id = utils.getInt();</span>
+<span class="nc" id="L142">		LOGGER.info(&quot;Please enter the Order ID&quot;);</span>
+<span class="nc" id="L143">		int orderID = utils.getInt();</span>
+<span class="nc" id="L144">		return orderDAO.deleteItem(id, orderID);</span>
+	}
+
+	@Override
+	public int delete_order() {
+<span class="nc" id="L149">		LOGGER.info(&quot;Please enter the Order ID&quot;);</span>
+<span class="nc" id="L150">		int orderID = utils.getInt();</span>
+<span class="nc" id="L151">		orderDAO.deleteOrder(orderID);</span>
+<span class="nc" id="L152">		return orderID;</span>
+	}
+
+}
+	
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>java (Jun 4, 2021 10:32:43 AM)</div></body></html>

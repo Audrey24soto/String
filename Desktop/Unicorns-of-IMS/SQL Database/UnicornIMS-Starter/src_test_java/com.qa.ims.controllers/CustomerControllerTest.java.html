@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>CustomerControllerTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">java (Jun 4, 2021 10:32:43 AM)</a> &gt; <a href="../../index.html" class="el_group">UnicornIMS-Starter</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">com.qa.ims.controllers</a> &gt; <span class="el_source">CustomerControllerTest.java</span></div><h1>CustomerControllerTest.java</h1><pre class="source lang-java linenums">package com.qa.ims.controllers;
+
+import static org.junit.Assert.assertEquals;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnitRunner;
+
+import com.qa.ims.controller.CrudController;
+
+import com.qa.ims.persistence.dao.CustomerDAO;
+import com.qa.ims.persistence.domain.Customer;
+import com.qa.ims.utils.Utils;
+
+@RunWith(MockitoJUnitRunner.class)
+<span class="nc" id="L24">public class CustomerController implements CrudController&lt;Customer&gt; {</span>
+
+	public static final Logger LOGGER = LogManager.getLogger();
+	
+	@Mock
+	private Utils utils;
+
+	@Mock
+	private CustomerDAO dao;
+
+	@InjectMocks
+	private CustomerController controller;
+
+	@Test
+	public Customer testcreate() {
+		LOGGER.info(&quot;Please enter a Name for the Customer&quot;);
+		String firstName = utils.getString();
+<span class="nc" id="L41">		Customer customer = customerDAO.create(new Customer(0, firstName));</span>
+		LOGGER.info(&quot;Customer created&quot;);
+		return customer;
+	}
+
+	@Test
+	public List&lt;Customer&gt; testviewAll() {
+<span class="nc" id="L48">		List&lt;Customer&gt; customers = customerDAO.viewAll();</span>
+		for (int i = 0; i &lt; customers.size(); i ++) {
+			LOGGER.info(customers.get(i));
+		}	
+		return customers;
+	}
+	
+
+	@Test
+	public Customer testupdate() {
+		LOGGER.info(&quot;Please enter the id of the customer you would like to update&quot;);
+		int id = utils.getInt();
+		LOGGER.info(&quot;Please enter the updated Name for the customer&quot;);
+		String Name = utils.getString();
+<span class="nc" id="L62">		String newFirstname = customerDAO.update(Name, id);</span>
+		LOGGER.info(&quot;Customer Updated&quot;); 
+		return null;
+	}
+
+	@Test
+	public int testdelete() {
+		LOGGER.info(&quot;Please enter the id of the customer you would like to delete&quot;);
+		int id = utils.getInt();
+<span class="nc" id="L71">		return customerDAO.delete(id);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>java (Jun 4, 2021 10:32:43 AM)</div></body></html>

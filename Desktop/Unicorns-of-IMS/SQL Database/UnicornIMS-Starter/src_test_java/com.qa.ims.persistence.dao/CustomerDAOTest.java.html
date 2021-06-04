@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>CustomerDAOTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">java (Jun 4, 2021 10:32:43 AM)</a> &gt; <a href="../../index.html" class="el_group">UnicornIMS-Starter</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">com.qa.ims.persistence.dao</a> &gt; <span class="el_source">CustomerDAOTest.java</span></div><h1>CustomerDAOTest.java</h1><pre class="source lang-java linenums">package com.qa.ims.persistence.dao;
+
+import static org.junit.Assert.assertEquals;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.junit.Before;
+import org.junit.Test;
+
+import com.qa.ims.persistence.domain.Customer;
+import com.qa.ims.utils.DBUtils;
+
+<span class="nc" id="L21">public class CustomerDAOTest {</span>
+
+	
+<span class="nc" id="L24">	public static final Logger LOGGER = LogManager.getLogger();</span>
+	
+	@Before
+	public Customer modelFromResultSet(ResultSet resultSet) throws SQLException {
+<span class="nc" id="L28">		String firstName = resultSet.getString(&quot;name&quot;);</span>
+<span class="nc" id="L29">		int cid = resultSet.getInt(&quot;customer_id&quot;);</span>
+<span class="nc" id="L30">		return new Customer(cid,firstName);</span>
+	}
+
+	@Test
+	public Customer testcreate(Customer customer) {
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				PreparedStatement statement = connection
+						.prepareStatement(&quot;INSERT INTO customer(name) VALUES (?)&quot;);) {
+			statement.setString(1, customer.getFirstName());
+			statement.executeUpdate();
+<span class="nc" id="L40">			return readLatest();</span>
+		} catch (Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
+		return null;
+	}
+
+	@Test
+	public String testupdate(String Sunshine, int x) {
+<span class="nc" id="L50">		try (Connection connection = DBUtils.getInstance().getConnection();</span>
+<span class="nc" id="L51">				PreparedStatement statement = connection</span>
+<span class="nc" id="L52">						.prepareStatement(&quot;UPDATE customer SET name = ? WHERE customer_id = ?; &quot;);) {</span>
+<span class="nc" id="L53">			statement.setString(1,Sunshine);</span>
+<span class="nc" id="L54">			statement.setInt(2, x);</span>
+<span class="nc" id="L55">			statement.executeUpdate();</span>
+<span class="nc" id="L56">		}  catch (Exception e) {</span>
+<span class="nc" id="L57">			LOGGER.debug(e);</span>
+<span class="nc" id="L58">			LOGGER.error(e.getMessage());</span>
+		}
+<span class="nc" id="L60">		return null;</span>
+	}
+
+
+	@Test
+	public Customer testreadLatest() {
+<span class="nc" id="L66">		try (Connection connection = DBUtils.getInstance().getConnection();</span>
+<span class="nc" id="L67">				Statement statement = connection.createStatement();</span>
+<span class="nc" id="L68">				ResultSet resultSet = statement.executeQuery(&quot;SELECT * FROM customer ORDER BY customer_id DESC LIMIT 1&quot;);) {</span>
+<span class="nc" id="L69">			resultSet.next();</span>
+<span class="nc" id="L70">			return modelFromResultSet(resultSet);</span>
+<span class="nc" id="L71">		} catch (Exception e) {</span>
+<span class="nc" id="L72">			LOGGER.debug(e);</span>
+<span class="nc" id="L73">			LOGGER.error(e.getMessage());</span>
+		}
+<span class="nc" id="L75">		return null;</span>
+	}
+
+	@Test
+	public List&lt;Customer&gt; testviewAll() {
+<span class="nc" id="L80">		try (Connection connection = DBUtils.getInstance().getConnection();</span>
+<span class="nc" id="L81">				Statement statement = connection.createStatement();</span>
+<span class="nc" id="L82">				ResultSet resultSet = statement.executeQuery(&quot;SELECT * FROM customer&quot;);) {</span>
+<span class="nc" id="L83">			List&lt;Customer&gt; customers = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">			while (resultSet.next()) {</span>
+<span class="nc" id="L85">				customers.add(modelFromResultSet(resultSet));</span>
+			}
+<span class="nc" id="L87">			return customers;</span>
+<span class="nc" id="L88">		} catch (SQLException e) {</span>
+<span class="nc" id="L89">			LOGGER.debug(e);</span>
+<span class="nc" id="L90">			LOGGER.error(e.getMessage());</span>
+		}
+<span class="nc" id="L92">		return new ArrayList&lt;&gt;();</span>
+	}
+
+	@Test
+	public Customer testview(int i) {
+<span class="nc" id="L97">		try (Connection connection = DBUtils.getInstance().getConnection();</span>
+<span class="nc" id="L98">				PreparedStatement statement = connection.prepareStatement(&quot;SELECT * FROM customer WHERE customer_id =&quot; + i);) {</span>
+<span class="nc" id="L99">			statement.setLong(0, i);</span>
+<span class="nc" id="L100">			try (ResultSet resultSet = statement.executeQuery();) {</span>
+<span class="nc" id="L101">				resultSet.next();</span>
+<span class="nc" id="L102">				return modelFromResultSet(resultSet);</span>
+			}
+<span class="nc" id="L104">		} catch (Exception e) {</span>
+<span class="nc" id="L105">			LOGGER.debug(e);</span>
+<span class="nc" id="L106">			LOGGER.error(e.getMessage());</span>
+		}
+<span class="nc" id="L108">		return null;</span>
+	}
+
+	@Test
+	public int testdelete(int id) {
+<span class="nc" id="L113">		try (Connection connection = DBUtils.getInstance().getConnection();</span>
+<span class="nc" id="L114">				PreparedStatement statement = connection.prepareStatement(&quot;DELETE FROM customer WHERE customer_id = ?&quot;);) {</span>
+<span class="nc" id="L115">			statement.setLong(1, id);</span>
+<span class="nc" id="L116">			return statement.executeUpdate();</span>
+<span class="nc" id="L117">		} catch (Exception e) {</span>
+<span class="nc" id="L118">			LOGGER.debug(e);</span>
+<span class="nc" id="L119">			LOGGER.error(e.getMessage());</span>
+	}
+<span class="nc" id="L121">		return 1;</span>
+	}
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>java (Jun 4, 2021 10:32:43 AM)</div></body></html>
